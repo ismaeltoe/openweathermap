@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openweatherapp.viewmodels.WeatherViewModel;
-import org.openweatherapp.viewmodels.WeatherViewModelFactory;
 
 import java.io.IOException;
 
@@ -20,7 +19,6 @@ import java.io.IOException;
 public class WeatherActivity extends AppCompatActivity {
 
     private WeatherViewModel mWeatherViewModel;
-    private WeatherViewModelFactory mWeatherViewModelFactory;
 
     private TextView mCityView;
     private TextView mTempView;
@@ -45,12 +43,9 @@ public class WeatherActivity extends AppCompatActivity {
             mCity = getIntent().getStringExtra(KEY_CITY);
         }
 
-        mWeatherViewModelFactory = new WeatherViewModelFactory(mCity);
+        mWeatherViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
 
-        mWeatherViewModel = new ViewModelProvider(this, mWeatherViewModelFactory)
-                .get(WeatherViewModel.class);
-
-        mWeatherViewModel.getWeather().observe(this, response -> {
+        mWeatherViewModel.getWeather(mCity).observe(this, response -> {
 
             if (response.isSuccessful() && response.body() != null) {
 

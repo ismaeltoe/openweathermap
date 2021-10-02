@@ -16,9 +16,7 @@ public class WeatherViewModel extends ViewModel {
 
     private WeatherRepository mRepository;
 
-    private final LiveData<Response<ResponseBody>> mWeather;
-
-    public WeatherViewModel(String city) {
+    public WeatherViewModel() {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -34,9 +32,9 @@ public class WeatherViewModel extends ViewModel {
                 .create(WebService.class);
 
         mRepository = new WeatherRepository(service);
-
-        mWeather = mRepository.getWeather(city);
     }
 
-    public LiveData<Response<ResponseBody>> getWeather() { return mWeather; }
+    public LiveData<Response<ResponseBody>> getWeather(String city) {
+        return mRepository.getWeather(city);
+    }
 }
