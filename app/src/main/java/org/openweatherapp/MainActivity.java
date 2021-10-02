@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View itemView, int position) {
                 City city = adapter.getCurrentList().get(position);
-                Log.d("MainActivity", city.getCity());
+                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                intent.putExtra(WeatherActivity.KEY_CITY, city.getCity());
+                startActivity(intent);
             }
         });
     }
