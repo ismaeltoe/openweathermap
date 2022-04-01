@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenWeatherApp">
         <activity
-            android:name=".WeatherActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.cities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
