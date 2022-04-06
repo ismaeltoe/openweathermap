@@ -3,8 +3,9 @@ package org.openweatherapp.ui.cities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import org.openweatherapp.R
+import org.openweatherapp.databinding.ActivityMainBinding
 
 class MainActivity: AppCompatActivity() {
 
@@ -12,15 +13,17 @@ class MainActivity: AppCompatActivity() {
         CityViewModelFactory()
     }
 
+    // derived from the name of the layout file, that is, activity_main + Binding
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val adapter = CityAdapter()
 
-        recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
 
         adapter.submitList(viewModel.cities)
     }

@@ -1,13 +1,11 @@
 package org.openweatherapp.ui.cities
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.openweatherapp.R
+import org.openweatherapp.databinding.CityItemBinding
 
 class CityAdapter : ListAdapter<City, CityAdapter.ViewHolder>(CityDiffCallback()) {
 
@@ -20,19 +18,18 @@ class CityAdapter : ListAdapter<City, CityAdapter.ViewHolder>(CityDiffCallback()
         holder.bind(item)
     }
 
-    class ViewHolder private constructor (itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val cityView: TextView = itemView.findViewById(R.id.city)
+    class ViewHolder private constructor (val binding: CityItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: City) {
-            cityView.text = item.city
+            binding.city = item
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.city_item, parent, false)
-                return ViewHolder(view)
+                val binding = CityItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
@@ -41,7 +38,7 @@ class CityAdapter : ListAdapter<City, CityAdapter.ViewHolder>(CityDiffCallback()
 class CityDiffCallback : DiffUtil.ItemCallback<City>() {
 
     override fun areItemsTheSame(oldItem: City, newItem: City): Boolean {
-        return oldItem.city == newItem.city
+        return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: City, newItem: City): Boolean {
