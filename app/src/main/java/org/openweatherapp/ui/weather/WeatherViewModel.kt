@@ -1,31 +1,42 @@
 package org.openweatherapp.ui.weather
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.openweatherapp.network.CityApi
-import org.openweatherapp.network.models.CityApiResponse
+import org.openweatherapp.toWeatherUiState
 import java.lang.Exception
 
-class WeatherViewModel : ViewModel() {
+class WeatherViewModel(private val cityName: String?) : ViewModel() {
 
-    private val _weather = MutableLiveData<CityApiResponse>()
-    val weather: LiveData<CityApiResponse> = _weather
+    private val _weather = MutableLiveData<WeatherUiState>()
+    val weather: LiveData<WeatherUiState> = _weather
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
 
     init {
-        getWeather()
+        cityName?.let {
+            getWeather(cityName)
+        }
     }
 
-    private fun getWeather() {
+    private fun getWeather(cityName: String) {
         viewModelScope.launch {
             try {
-                val response = CityApi.retrofitService.getWeather("Abidjan", "84192d4a1e089b56f61245cf8b67d7ae", "metric")
-                _weather.value = response
+                val response = CityApi.retrofitService.getWeather(
+                    cityName,
+                    "84192d4a1e089b56f61245cf8b67d7ae",
+                    "metric"
+                )
+                _weather.value = response.toWeatherUiState()
+                _error.value = null
             } catch (e: Exception) {
-                TODO()
+                _error.value = e.localizedMessage
             }
         }
+    }
+
+    fun errorShown() {
+        _error.value = null
     }
 }

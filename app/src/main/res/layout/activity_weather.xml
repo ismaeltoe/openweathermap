@@ -1,61 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_gravity="start"
-        android:layout_height="wrap_content"
+    <data>
+        <variable
+            name="cityName"
+            type="String" />
+
+        <variable
+            name="weatherViewModel"
+            type="org.openweatherapp.ui.weather.WeatherViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/city"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:text="Abidjan" />
+        android:layout_height="match_parent"
+        tools:context=".ui.weather.WeatherActivity">
 
         <LinearLayout
-            android:gravity="center_horizontal"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="start"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
-                android:id="@+id/temp"
+                android:id="@+id/city"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textSize="96sp"
-                tools:text="29" />
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:text="@{cityName}"
+                tools:text="Abidjan" />
 
             <LinearLayout
                 android:gravity="center_horizontal"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/weather"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/temp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:textColor="#646464"
-                    tools:text="Etdehjde" />
+                    android:layout_width="wrap_content"
+                    android:textSize="96sp"
+                    android:text="@{@string/format_temperature(weatherViewModel.weather.temp)}"
+                    tools:text="29" />
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:weatherIcon="@{weatherViewModel.weather.icon}" />
+
+                    <TextView
+                        android:id="@+id/weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="#646464"
+                        android:text="@{weatherViewModel.weather.description}"
+                        tools:text="rain" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</layout>

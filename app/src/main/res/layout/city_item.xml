@@ -6,6 +6,9 @@
         <variable
             name="city"
             type="org.openweatherapp.ui.cities.City" />
+        <variable
+            name="clickListener"
+            type="org.openweatherapp.ui.cities.CityListener" />
     </data>
 
     <LinearLayout
@@ -15,7 +18,8 @@
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:orientation="vertical"
         android:padding="5dp"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> clickListener.onClick(city)}">
 
         <TextView
             android:id="@+id/city_name"
