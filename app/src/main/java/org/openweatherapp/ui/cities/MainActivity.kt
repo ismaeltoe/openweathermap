@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import org.openweatherapp.R
 import org.openweatherapp.databinding.ActivityMainBinding
 import org.openweatherapp.ui.weather.WeatherActivity
@@ -31,6 +32,9 @@ class MainActivity: AppCompatActivity() {
         })
 
         binding.recyclerview.adapter = adapter
+        binding.recyclerview.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
 
         adapter.submitList(viewModel.cities)
 
